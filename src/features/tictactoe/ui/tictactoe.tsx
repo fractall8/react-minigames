@@ -61,7 +61,7 @@ export function TicTacToe() {
     : null;
 
   return (
-    <div className="flex flex-col items-center justify-center">
+    <div className="flex flex-col gap-2 items-center justify-center">
       <div className="flex gap-2 mb-2 items-center">
         <input
           checked={isBotEnabled}
@@ -70,18 +70,18 @@ export function TicTacToe() {
           id="isBotEnabledCheckBox"
           type="checkbox"
         />
-        <label htmlFor="isBotEnabledCheckBox">Bot enabled</label>
+        <label htmlFor="isBotEnabledCheckBox">Play with Bot</label>
       </div>
       <div className="grid grid-cols-[repeat(2,1fr)] w-full gap-2 mb-2">
         <div
-          className={`border-gray-300 border-1 rounded-sm p-1 ${
+          className={`border-gray-300 border-1 rounded-sm p-1 hover:cursor-pointer ${
             isXNext && "!border-blue-300"
           }`}
         >
           X
         </div>
         <div
-          className={`border-gray-300 border-1 rounded-sm p-1 ${
+          className={`border-gray-300 border-1 rounded-sm p-1 hover:cursor-pointer ${
             !isXNext && "!border-blue-300"
           }`}
           onClick={() => setBotMark("X")}
@@ -102,7 +102,7 @@ export function TicTacToe() {
       </div>
 
       <button
-        className="bg-gray-800 px-4 py-1 rounded-md text-white mb-4 hover:cursor-pointer hover:bg-gray-600 transition-colors duration-300 text-lg"
+        className="bg-gray-800 px-4 py-1 rounded-md text-white hover:cursor-pointer hover:bg-gray-600 transition-colors duration-300 text-lg"
         onClick={reset}
       >
         Restart

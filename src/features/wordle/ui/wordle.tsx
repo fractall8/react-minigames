@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { Grid, Keyboard, Modal } from "features/wordle/ui";
-import { useWordle } from "features/wordle/model/useWordle";
-import { WORDS } from "features/wordle/model/constants";
+import { Grid, Keyboard, Modal } from "@/features/wordle/ui";
+import { useWordle } from "@/features/wordle/model/useWordle";
+import { WORDS } from "@/features/wordle/model/constants";
 
 // Temporary constant, will be received from backend
 
@@ -39,7 +39,7 @@ export function Wordle() {
   }, [errorMsg, clearErrorMsg]);
 
   return (
-    <>
+    <div className="flex flex-col items-center justify-center gap-4">
       <Grid
         currentGuess={currentGuess}
         guesses={guesses}
@@ -63,6 +63,6 @@ export function Wordle() {
         </div>
       )}
       <Keyboard usedLetters={usedLetters} />
-    </>
+    </div>
   );
 }
