@@ -3,3 +3,19 @@
 #root {
   @apply max-w-5xl mx-auto px-4 py-2;
 }
+
+.correct {
+  @apply bg-green-400;
+}
+
+.almost {
+  @apply bg-amber-400;
+}
+
+.wrong {
+  @apply bg-gray-400;
+}
+
+.unchecked {
+  @apply bg-white;
+}
