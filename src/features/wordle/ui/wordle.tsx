@@ -3,8 +3,6 @@ import { Grid, Keyboard, Modal } from "@/features/wordle/ui";
 import { useWordle } from "@/features/wordle/model/useWordle";
 import { WORDS } from "@/features/wordle/model/constants";
 
-// Temporary constant, will be received from backend
-
 export function Wordle() {
   const [solution, setSolution] = useState<string>("");
 
