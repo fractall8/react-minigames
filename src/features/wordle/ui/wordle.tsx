@@ -1,9 +1,7 @@
-import { Grid } from "features/wordle/ui/grid";
-import { useWordle } from "features/wordle/model/useWordle";
-import { Keyboard } from "features/wordle/ui/keyboard";
-import { Modal } from "./modal";
-import { WORDS } from "../model/constants";
 import { useEffect, useState } from "react";
+import { Grid, Keyboard, Modal } from "features/wordle/ui";
+import { useWordle } from "features/wordle/model/useWordle";
+import { WORDS } from "features/wordle/model/constants";
 
 // Temporary constant, will be received from backend
 
@@ -26,9 +24,19 @@ export function Wordle() {
     showModal,
     isWin,
     resetGame,
+    errorMsg,
+    clearErrorMsg,
     WORD_LENGTH,
     NUMBER_OF_GUESSES,
   } = useWordle(solution, getRandomWord);
+
+  useEffect(() => {
+    if (!errorMsg) return;
+
+    const timer = setTimeout(() => clearErrorMsg(), 2500);
+
+    return () => clearTimeout(timer);
+  }, [errorMsg, clearErrorMsg]);
 
   return (
     <>
@@ -45,6 +53,14 @@ export function Wordle() {
           solution={solution}
           turn={guesses.length}
         />
+      )}
+      {errorMsg && (
+        <div className="fixed top-8 left-[50%] translate-x-[-50%] z-10 bg-black/80 rounded-lg text-white flex items-center px-4 py-2 gap-4">
+          <p>{errorMsg}</p>
+          <button className="hover:cursor-pointer" onClick={clearErrorMsg}>
+            x
+          </button>
+        </div>
       )}
       <Keyboard usedLetters={usedLetters} />
     </>

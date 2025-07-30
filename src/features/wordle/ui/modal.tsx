@@ -1,4 +1,4 @@
-import { Row } from "features/wordle/ui/row";
+import { Row } from "features/wordle/ui";
 
 export const Modal = ({
   isWin,

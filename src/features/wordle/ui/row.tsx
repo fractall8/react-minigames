@@ -1,5 +1,5 @@
 import { memo } from "react";
-import { Cell } from "features/wordle/ui/cell";
+import { Cell } from "features/wordle/ui";
 import type { Guess } from "features/wordle/model/types";
 
 export const Row = memo(

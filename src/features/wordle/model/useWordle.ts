@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { Letter, Guess, UsedLetters } from "features/wordle/model/types";
-import { WORDS } from "./constants";
+import { WORDS } from "features/wordle/model/constants";
 
 export const useWordle = (winningGuess: string, setNewWinningGuess: () => void) => {
     console.log("winning word:", winningGuess)
@@ -13,6 +13,8 @@ export const useWordle = (winningGuess: string, setNewWinningGuess: () => void) 
     const [usedLetters, setUsedLetters] = useState<UsedLetters>({})
     const [currentGuess, setCurrentGuess] = useState<Letter[]>([]);
     const [guesses, setGuesses] = useState<Guess[]>([]);
+
+    const [errorMsg, setErrorMsg] = useState<string>("");
 
     const currentGuessRef = useRef(currentGuess);
     const guessesRef = useRef(guesses);
@@ -32,13 +34,13 @@ export const useWordle = (winningGuess: string, setNewWinningGuess: () => void) 
         const guess = currentGuessRef.current;
 
         if (guess.length < 5) {
-            console.log("Word must be at least 5 chars long!")
+            setErrorMsg("Word must be at least 5 chars long!")
             return
         };
 
         const guessString = guess.reduce((acc, letter) => acc += letter.key, "").toLowerCase();
         if (!WORDS.includes(guessString)) {
-            console.log("Word not found in dictionary!")
+            setErrorMsg("Word not found in dictionary!")
             return;
         }
 
@@ -115,5 +117,9 @@ export const useWordle = (winningGuess: string, setNewWinningGuess: () => void) 
         setNewWinningGuess()
     }
 
-    return { currentGuess, guesses, usedLetters, isWin, showModal, resetGame, NUMBER_OF_GUESSES, WORD_LENGTH }
+    function clearErrorMsg() {
+        setErrorMsg("")
+    }
+
+    return { currentGuess, guesses, usedLetters, isWin, showModal, resetGame, errorMsg, clearErrorMsg, NUMBER_OF_GUESSES, WORD_LENGTH }
 }

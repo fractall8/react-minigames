@@ -1,5 +1,5 @@
-import { letters } from "features/wordle/model/constants";
 import { Fragment } from "react/jsx-runtime";
+import { letters } from "features/wordle/model/constants";
 import type { UsedLetters } from "features/wordle/model/types";
 
 export const Keyboard = ({ usedLetters }: { usedLetters: UsedLetters }) => {
