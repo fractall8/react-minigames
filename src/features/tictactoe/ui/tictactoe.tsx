@@ -1,42 +1,7 @@
-import type { SquareValue, Squares } from "features/tictactoe/model/types";
 import useTicTacToe from "features/tictactoe/model/useTicTacToe";
+import { HistoryList, Board } from "features/tictactoe/ui";
 
-function Square({
-  value,
-  onSquareClick,
-}: {
-  value: SquareValue;
-  onSquareClick: () => void;
-}) {
-  return (
-    <button
-      className="w-16 h-16 bg-gray-300 rounded-sm"
-      onClick={onSquareClick}
-    >
-      {value}
-    </button>
-  );
-}
-
-function Board({
-  squares,
-  onMove,
-}: {
-  squares: Squares;
-  onMove: (index: number) => void;
-}) {
-  return (
-    <>
-      <div className="grid grid-cols-[repeat(3,1fr)] grid-rows-[repeat(3,1fr)] gap-2">
-        {squares.map((squareValue, i) => (
-          <Square key={i} value={squareValue} onSquareClick={() => onMove(i)} />
-        ))}
-      </div>
-    </>
-  );
-}
-
-export function TicTacToe() {
+export const TicTacToe = () => {
   const {
     history,
     currentMove,
@@ -61,35 +26,41 @@ export function TicTacToe() {
     : null;
 
   return (
-    <div className="flex flex-col gap-2 items-center justify-center">
-      <div className="flex gap-2 mb-2 items-center">
+    <div className="flex flex-col gap-4 items-center justify-center p-4 w-full max-w-md mx-auto text-gray-800">
+      <div className="flex items-center gap-2">
         <input
           checked={isBotEnabled}
           onChange={() => setIsBotEnabled(!isBotEnabled)}
-          className="w-4 h-4"
           id="isBotEnabledCheckBox"
           type="checkbox"
+          className="accent-blue-600 w-4 h-4"
         />
         <label htmlFor="isBotEnabledCheckBox">Play with Bot</label>
       </div>
-      <div className="grid grid-cols-[repeat(2,1fr)] w-full gap-2 mb-2">
+
+      <div className="grid grid-cols-2 gap-2 w-full">
         <div
-          className={`border-gray-300 border-1 rounded-sm p-1 hover:cursor-pointer ${
-            isXNext && "!border-blue-300"
+          className={`text-center border rounded-md py-2 cursor-pointer transition-all text-lg select-none ${
+            isXNext
+              ? "border-blue-400 bg-blue-50 font-medium"
+              : "border-gray-300 hover:border-blue-200"
           }`}
         >
           X
         </div>
         <div
-          className={`border-gray-300 border-1 rounded-sm p-1 hover:cursor-pointer ${
-            !isXNext && "!border-blue-300"
+          className={`text-center border rounded-md py-2 cursor-pointer transition-all text-lg select-none ${
+            !isXNext
+              ? "border-blue-400 bg-blue-50 font-medium"
+              : "border-gray-300 hover:border-blue-200"
           }`}
           onClick={() => setBotMark("X")}
         >
           O
         </div>
       </div>
-      <p className="mb-2">
+
+      <p className="sm:text-lg font-medium text-gray-600 text-center">
         {history.length === 1
           ? "Start game or select player (X or O)"
           : status
@@ -97,31 +68,16 @@ export function TicTacToe() {
           : `${isXNext ? "X" : "O"}'s turn`}
       </p>
 
-      <div className="mb-4">
-        <Board squares={currentSquares} onMove={playerMove} />
-      </div>
+      <Board squares={currentSquares} onMove={playerMove} />
 
       <button
-        className="bg-gray-800 px-4 py-1 rounded-md text-white hover:cursor-pointer hover:bg-gray-600 transition-colors duration-300 text-lg"
         onClick={reset}
+        className="mt-2 bg-gray-800 hover:bg-gray-700 text-white py-2 px-6 rounded-md transition-colors hover:cursor-pointer"
       >
         Restart
       </button>
 
-      <ul className="flex flex-col gap-2">
-        {history.map(
-          (_, move) =>
-            move > 0 && (
-              <li
-                className="hover:cursor-pointer"
-                onClick={() => jump(move)}
-                key={move}
-              >
-                Go to move №{move}
-              </li>
-            )
-        )}
-      </ul>
+      <HistoryList history={history} jump={jump} />
     </div>
   );
-}
+};
