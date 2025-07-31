@@ -1,0 +1,1 @@
+export { MainLink } from "./main-link"
