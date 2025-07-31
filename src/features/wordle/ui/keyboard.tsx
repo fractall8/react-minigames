@@ -8,7 +8,6 @@ export const Keyboard = ({ usedLetters }: { usedLetters: UsedLetters }) => {
   function handleKeyClick(key: string) {
     document.dispatchEvent(new KeyboardEvent("keydown", { key }));
   }
-  console.log(usedLetters);
 
   return (
     <div className="flex flex-col gap-2 items-center select-none">
@@ -20,7 +19,7 @@ export const Keyboard = ({ usedLetters }: { usedLetters: UsedLetters }) => {
                 onClick={() => handleKeyClick(key)}
                 className={cn(
                   "flex items-center justify-center rounded-md text-sm font-semibold uppercase transition-colors duration-200 ease-in-out",
-                  "border border-neutral-300 shadow-sm hover:brightness-95 active:scale-95",
+                  "border border-neutral-300 shadow-sm hover:brightness-95 active:scale-95 hover:cursor-pointer",
                   key === "Enter" || key === "Backspace"
                     ? "w-16 h-12 bg-neutral-300"
                     : "w-10 h-12",

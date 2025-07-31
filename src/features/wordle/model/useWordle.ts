@@ -3,7 +3,6 @@ import type { Letter, Guess, UsedLetters } from "features/wordle/model/types";
 import { WORDS } from "features/wordle/model/constants";
 
 export const useWordle = (winningGuess: string, setNewWinningGuess: () => void) => {
-    console.log("winning word:", winningGuess)
     const NUMBER_OF_GUESSES = 6;
     const WORD_LENGTH = 5;
 
@@ -32,6 +31,8 @@ export const useWordle = (winningGuess: string, setNewWinningGuess: () => void) 
 
     const checkGuess = useCallback(() => {
         const guess = currentGuessRef.current;
+        const guesses = guessesRef.current;
+
 
         if (guess.length < 5) {
             setErrorMsg("Word must be at least 5 chars long!")
@@ -39,9 +40,18 @@ export const useWordle = (winningGuess: string, setNewWinningGuess: () => void) 
         };
 
         const guessString = guess.reduce((acc, letter) => acc += letter.key, "").toLowerCase();
+
         if (!WORDS.includes(guessString)) {
             setErrorMsg("Word not found in dictionary!")
             return;
+        }
+
+        const guessesStrings = guesses.map((guess) => guess.reduce((acc, letter) => acc += letter.key, "").toLowerCase())
+
+        if (guessesStrings.includes(guessString)) {
+            setErrorMsg("You have already tried this word!")
+            return;
+
         }
 
         const checkedGuess = guess.map((letterObj, i) => ({ ...letterObj, status: getLetterStatus({ pos: i, letter: letterObj.key }) })) as Letter[]
@@ -57,15 +67,13 @@ export const useWordle = (winningGuess: string, setNewWinningGuess: () => void) 
             return { ...prev, ...newLetters }
         })
 
-
-        const guesses = guessesRef.current;
         setGuesses([...guesses, checkedGuess]);
         if (checkedGuess.every((letter) => letter.status === "correct")) {
             setIsWin(true);
             setShowModal(true)
             return;
         }
-        console.log(guesses.length)
+
         if (guesses.length + 1 === NUMBER_OF_GUESSES) {
             setShowModal(true)
             return;
@@ -84,7 +92,7 @@ export const useWordle = (winningGuess: string, setNewWinningGuess: () => void) 
             if (guessesRef.current.length === NUMBER_OF_GUESSES) return;
 
             const key = event.key;
-            console.log(key);
+
             if (key === "Backspace") {
                 deleteLetter();
                 return;
