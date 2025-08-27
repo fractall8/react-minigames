@@ -27,7 +27,7 @@ function calculateWinner(squares: Squares) {
 const randomBot: TicTacToeBot = (board) => {
     const free = board
         .map((v, i) => (v ? null : i))
-        .filter((v) => v !== null) as number[];
+        .filter((v) => v !== null);
     return free[Math.floor(Math.random() * free.length)];
 };
 
