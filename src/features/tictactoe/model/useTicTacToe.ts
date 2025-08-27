@@ -23,48 +23,50 @@ function calculateWinner(squares: Squares) {
     return null;
 }
 
+// Uncomment this functions when select difficulty feature is implemented
+
 // Difficulty: easy
-const randomBot: TicTacToeBot = (board) => {
-    const free = board
-        .map((v, i) => (v ? null : i))
-        .filter((v) => v !== null);
-    return free[Math.floor(Math.random() * free.length)];
-};
+// const randomBot: TicTacToeBot = (board) => {
+//     const free = board
+//         .map((v, i) => (v ? null : i))
+//         .filter((v) => v !== null);
+//     return free[Math.floor(Math.random() * free.length)];
+// };
 
 // If bot tries to place his mark in corners first - Difficulty: hard
 // If in sides - Difficulty: medium
-const findBestMoveBot: TicTacToeBot = (board, botMark) => {
-    for (let i = 0; i < board.length; i++) {
-        if (board[i] === null) {
-            const temp = board.slice();
-            temp[i] = botMark;
-            if (calculateWinner(temp) === botMark) return i;
-        }
-    }
+// const findBestMoveBot: TicTacToeBot = (board, botMark) => {
+//     for (let i = 0; i < board.length; i++) {
+//         if (board[i] === null) {
+//             const temp = board.slice();
+//             temp[i] = botMark;
+//             if (calculateWinner(temp) === botMark) return i;
+//         }
+//     }
 
-    const playerMark = botMark === "X" ? "O" : "X";
-    for (let i = 0; i < board.length; i++) {
-        if (board[i] === null) {
-            const temp = board.slice();
-            temp[i] = playerMark;
-            if (calculateWinner(temp) === playerMark) return i;
-        }
-    }
+//     const playerMark = botMark === "X" ? "O" : "X";
+//     for (let i = 0; i < board.length; i++) {
+//         if (board[i] === null) {
+//             const temp = board.slice();
+//             temp[i] = playerMark;
+//             if (calculateWinner(temp) === playerMark) return i;
+//         }
+//     }
 
-    if (board[4] === null) return 4;
+//     if (board[4] === null) return 4;
 
-    // place mark in one of corners
-    for (const i of [0, 2, 6, 8]) {
-        if (board[i] === null) return i;
-    }
+//     // place mark in one of corners
+//     for (const i of [0, 2, 6, 8]) {
+//         if (board[i] === null) return i;
+//     }
 
-    // place mark in one of sides
-    for (const i of [1, 3, 5, 7]) {
-        if (board[i] === null) return i;
-    }
+//     // place mark in one of sides
+//     for (const i of [1, 3, 5, 7]) {
+//         if (board[i] === null) return i;
+//     }
 
-    return -1;
-};
+//     return -1;
+// };
 
 function minmax(
     board: Squares,
